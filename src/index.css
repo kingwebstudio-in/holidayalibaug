@@ -1,0 +1,62 @@
+@import "tailwindcss";
+/* Fonts are bundled with the site (no requests to Google Fonts): fewer third parties, faster first paint. */
+@import "@fontsource/cormorant-garamond/latin-400.css";
+@import "@fontsource/cormorant-garamond/latin-500.css";
+@import "@fontsource/cormorant-garamond/latin-600.css";
+@import "@fontsource/cormorant-garamond/latin-700.css";
+@import "@fontsource/cormorant-garamond/latin-400-italic.css";
+@import "@fontsource/cormorant-garamond/latin-600-italic.css";
+@import "@fontsource-variable/manrope/index.css";
+
+@theme {
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Manrope Variable', 'Manrope', system-ui, -apple-system, sans-serif;
+
+  --color-forest: #092D28;
+  --color-forest-dark: #062722;
+  --color-forest-light: #123B33;
+  --color-gold: #D8AD57;
+  --color-gold-light: #E8C77F;
+  --color-gold-deep: #B58B35;
+  --color-ivory: #FBF7EF;
+  --color-cream: #F5EFE4;
+  --color-cream-light: #F9F6F0;
+  --color-charcoal: #171916;
+  --color-muted: #68675F;
+  --color-subtle-border: #E6DED0;
+  --color-form-border: #DDD8CF;
+}
+
+:root {
+  --primary-forest: #092D28;
+  --footer-green: #062722;
+  --champagne-gold: #D8AD57;
+  --warm-ivory: #FBF7EF;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: #FBF7EF;
+  color: #171916;
+  overflow-x: hidden;
+}
+
+/* Custom editorial styling */
+.font-editorial {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+}
+
+/* Custom smooth scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #F5EFE4;
+}
+::-webkit-scrollbar-thumb {
+  background: #D8AD57;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #B58B35;
+}

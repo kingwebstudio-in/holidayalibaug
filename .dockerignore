@@ -1,0 +1,14 @@
+node_modules
+dist
+server/dist
+server/.data
+.git
+src/.git
+.env
+.env.*
+!.env.example
+.image-originals
+e2e
+*.log
+.DS_Store
+docs

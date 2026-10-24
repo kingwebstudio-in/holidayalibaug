@@ -1,0 +1,29 @@
+# Render Blueprint (https://render.com/docs/blueprint-spec). One web service; the database is your Supabase project.
+# This file is a convenience template — the project does not depend on Render; any Node/Docker host works (see docs/DEPLOYMENT.md).
+# Secrets are marked `sync: false`: Render asks for them in its dashboard, so they are never stored in Git.
+services:
+  - type: web
+    name: holidayalibag
+    runtime: docker
+    plan: starter
+    healthCheckPath: /api/v1/health
+    autoDeploy: false
+    envVars:
+      - { key: NODE_ENV, value: production }
+      - { key: DATA_MODE, value: postgres }
+      - { key: TRUST_PROXY, value: "1" }
+      - { key: FORCE_HTTPS, value: "true" }
+      - { key: ENABLE_HSTS, value: "false" }       # switch to true after HTTPS is verified on the live domain
+      - { key: BUSINESS_TIMEZONE, value: Asia/Kolkata }
+      - { key: SESSION_SECRET, generateValue: true }
+      - { key: SITE_URL, sync: false }              # e.g. https://holidayalibag.com
+      - { key: DATABASE_URL, sync: false }          # Supabase "Session pooler" connection string
+      - { key: CLOUDINARY_CLOUD_NAME, sync: false }
+      - { key: CLOUDINARY_API_KEY, sync: false }
+      - { key: CLOUDINARY_API_SECRET, sync: false }
+      - { key: ANALYTICS_MEASUREMENT_ID, sync: false }
+      - { key: SMTP_HOST, sync: false }
+      - { key: SMTP_USER, sync: false }
+      - { key: SMTP_PASS, sync: false }
+      - { key: NOTIFY_EMAIL_FROM, sync: false }
+      - { key: NOTIFY_EMAIL_TO, sync: false }
