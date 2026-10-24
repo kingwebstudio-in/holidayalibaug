@@ -1,9 +1,17 @@
-
 {
-  "rewrites": [
-    {
-      "source": "/((?!api/).*)",
-      "destination": "/index.html"
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "npm run build:all",
+  "outputDirectory": "dist",
+  "functions": {
+    "api/index.js": {
+      "includeFiles": "server/migrations/**",
+      "maxDuration": 30
     }
+  },
+  "rewrites": [
+    { "source": "/api/:path*", "destination": "/api" },
+    { "source": "/robots.txt", "destination": "/api" },
+    { "source": "/sitemap.xml", "destination": "/api" },
+    { "source": "/((?!api/).*)", "destination": "/index.html" }
   ]
 }
