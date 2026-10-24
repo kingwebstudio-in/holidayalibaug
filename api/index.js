@@ -5,11 +5,14 @@ import { prepareDatabase } from '../server/dist/db/bootstrap.js';
 
 let app;
 let ready;
+let failedStage = 'database';
 
 function init() {
   if (!ready) {
     ready = (async () => {
+      failedStage = 'database';
       await prepareDatabase();
+      failedStage = 'app';
       app = createApp();
     })().catch((error) => {
       ready = undefined; // allow the next request to retry
@@ -19,18 +22,13 @@ function init() {
   return ready;
 }
 
-// A short, secret-free category for the failure, so it can be diagnosed from the browser.
-// TEMPORARY: remove the `reason` field once the API works.
-function classify(message) {
-  const m = String(message || '');
-  if (/authentication failed|credentials|password/i.test(m)) return 'db_auth';
-  if (/Cannot resolve|ENOTFOUND/i.test(m)) return 'db_dns';
-  if (/timed out|reset|ETIMEDOUT/i.test(m)) return 'db_timeout';
-  if (/refused|ECONNREFUSED/i.test(m)) return 'db_refused';
-  if (/not been migrated/i.test(m)) return 'migrations_pending';
-  if (/ENOENT|no such file|migrations/i.test(m)) return 'migrations_files_missing';
-  if (/SSL|TLS|certificate/i.test(m)) return 'db_tls';
-  return 'other';
+// TEMPORARY DIAGNOSTIC: a short, scrubbed version of the startup error. Remove `stage` and `detail` once the API works.
+function scrub(message) {
+  return String(message || '')
+    .replace(/[a-z][a-z0-9+.-]*:\/\/\S+/gi, '<hidden>') // any URL, including database URLs
+    .replace(/[\w.+-]+@[\w.-]+/g, '<hidden>')           // e-mail-like or user@host text
+    .replace(/(password|passwd|secret|token|key)\s*[=:]\s*\S+/gi, '$1=<hidden>')
+    .slice(0, 220);
 }
 
 export default async function handler(req, res) {
@@ -45,7 +43,12 @@ export default async function handler(req, res) {
     res.end(
       JSON.stringify({
         success: false,
-        error: { code: 'service_unavailable', message: 'The API is temporarily unavailable.', reason: classify(message) },
+        error: {
+          code: 'service_unavailable',
+          message: 'The API is temporarily unavailable.',
+          stage: failedStage,
+          detail: scrub(message),
+        },
       }),
     );
     return;
