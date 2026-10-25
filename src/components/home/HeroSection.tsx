@@ -55,7 +55,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
             {/* Supporting Copy */}
             <p className="text-sm sm:text-base text-white/90 max-w-lg font-light leading-relaxed mb-6 sm:mb-8 drop-shadow">
-              Exclusive villas, serene beaches and unforgettable stays — all in one destination.
+              Your Trusted Holiday Partner since 2021.
             </p>
 
             {/* Horizontal Booking Bar */}
