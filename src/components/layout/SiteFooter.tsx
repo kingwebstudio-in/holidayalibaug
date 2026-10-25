@@ -218,52 +218,45 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({
           </div>
         </div>
 
-        {/* Bottom Row */}
-        {/* <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[12px] text-white/70">
-          <div>
-            © {currentYear} HolidayAlibag. All rights reserved.
-          </div> */}
-
-           <div className="text-[11px] text-white/65">
-  Designed & Developed by{' '}
-  <a 
-    href="https://kingwebstudio.in" 
-    target="_blank" 
-    rel="noopener noreferrer"
-    className="hover:underline text-white"
-  >
-    KING WEB STUDIO
-  </a>
-</div>
-
-          <div className="flex items-center gap-4 flex-wrap justify-center">
-            <Link to="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
-            <span aria-hidden="true">|</span>
-            <Link to="/terms-and-conditions" className="hover:text-white transition-colors">Terms &amp; Conditions</Link>
-            {consent && (<><span aria-hidden="true">|</span><button type="button" onClick={consent.openPreferences} className="hover:text-white transition-colors">Cookie settings</button></>)}
-            <span aria-hidden="true">|</span>
-            <a href="/admin" className="text-[#D8AD57] hover:text-[#D8AD57] transition-colors">
-              Admin Portal
+        {/* Footer attribution and legal links */}
+        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-white/65">
+          <div className="text-center sm:text-left">
+            Designed &amp; Developed by{' '}
+            <a
+              href="https://kingwebstudio.in"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:underline"
+            >
+              KING WEB STUDIO
             </a>
           </div>
 
-        {/* <div className="text-[11px] text-white/65">
-  Designed & Developed by{' '}
-  <a 
-    href="https://kingwebstudio.in" 
-    target="_blank" 
-    rel="noopener noreferrer"
-    className="hover:underline text-white"
-  >
-    KING WEB STUDIO
-  </a>
-</div> */}
-<div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[12px] text-white/70">
-          <div>
-            © {currentYear} HolidayAlibag. All rights reserved.
-          </div>
+          <nav
+            aria-label="Footer legal links"
+            className="flex flex-wrap items-center justify-center sm:justify-end gap-x-3 gap-y-2 text-center"
+          >
+            <Link to="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
+            <span aria-hidden="true">|</span>
+            <Link to="/terms-and-conditions" className="hover:text-white transition-colors">Terms &amp; Conditions</Link>
+            {consent && (
+              <>
+                <span aria-hidden="true">|</span>
+                <button type="button" onClick={consent.openPreferences} className="hover:text-white transition-colors">
+                  Cookie settings
+                </button>
+              </>
+            )}
+            <span aria-hidden="true">|</span>
+            <a href="/admin" className="text-[#D8AD57] hover:text-[#E8C77F] transition-colors">
+              Admin Portal
+            </a>
+          </nav>
+        </div>
 
-
+        {/* Copyright */}
+        <div className="pt-5 text-[12px] text-white/70 text-center sm:text-left">
+          © {currentYear} HolidayAlibag. All rights reserved.
         </div>
       </div>
     </footer>
