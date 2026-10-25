@@ -219,10 +219,22 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({
         </div>
 
         {/* Bottom Row */}
-        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[12px] text-white/70">
+        {/* <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[12px] text-white/70">
           <div>
             © {currentYear} HolidayAlibag. All rights reserved.
-          </div>
+          </div> */}
+
+           <div className="text-[11px] text-white/65">
+  Designed & Developed by{' '}
+  <a 
+    href="https://kingwebstudio.in" 
+    target="_blank" 
+    rel="noopener noreferrer"
+    className="hover:underline text-white"
+  >
+    KING WEB STUDIO
+  </a>
+</div>
 
           <div className="flex items-center gap-4 flex-wrap justify-center">
             <Link to="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
@@ -235,7 +247,7 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({
             </a>
           </div>
 
-        <div className="text-[11px] text-white/65">
+        {/* <div className="text-[11px] text-white/65">
   Designed & Developed by{' '}
   <a 
     href="https://kingwebstudio.in" 
@@ -245,7 +257,13 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({
   >
     KING WEB STUDIO
   </a>
-</div>
+</div> */}
+<div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[12px] text-white/70">
+          <div>
+            © {currentYear} HolidayAlibag. All rights reserved.
+          </div>
+
+
         </div>
       </div>
     </footer>
