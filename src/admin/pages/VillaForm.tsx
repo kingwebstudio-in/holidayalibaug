@@ -30,11 +30,27 @@ const FIELD_TAB: Record<string, TabId> = { name: 'basic', slug: 'basic', badge: 
 const tabOf = (field: string): TabId => FIELD_TAB[field] ?? FIELD_TAB[field.split('.')[0]] ?? 'basic';
 const SUGGESTED = ['Private Pool', 'Air Conditioning', 'Wi-Fi', 'Fully Equipped Kitchen', 'Parking', 'Garden', 'Sea View', 'Caretaker', 'TV Lounge', 'Barbecue'];
 const lines = (s: string) => s.split('\n').map((x) => x.trim()).filter(Boolean);
+
+// API/database values remain icon identifiers (for example, `sparkles`), but the
+// admin UI should present a readable label rather than exposing the raw identifier.
+const iconLabel = (icon: string) => {
+  const readable = icon.replace(/[-_]+/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+  return icon === 'sparkles' ? '✨ Sparkles (default)' : readable || 'Default icon';
+};
+const normalizeAmenity = (amenity: { label?: string | null; icon?: string | null }) => {
+  const icon = amenity.icon?.trim() || 'sparkles';
+  const rawLabel = amenity.label?.trim() || '';
+  // Recover rows where the icon identifier was accidentally saved as the label.
+  const label = rawLabel.toLowerCase() === icon.toLowerCase() && /^[a-z]+(?:[-_][a-z]+)*$/i.test(rawLabel)
+    ? ''
+    : rawLabel;
+  return { label, icon };
+};
 const isImageUrl = (u: string) => /^\/(?!\/)\S*$/.test(u) || /^https:\/\/\S+$/.test(u);
 
 function fromVilla(v: AdminVilla): F {
   return { name: v.name, slug: v.slug, badge: v.badge ?? '', propertyType: v.propertyType, location: v.location, locality: v.locality, addressDetails: v.addressDetails ?? '', shortDescription: v.shortDescription, fullDescription: v.fullDescription,
-    highlights: v.highlights.join('\n'), startingPrice: v.startingPrice != null ? String(v.startingPrice) : '', bedrooms: String(v.bedrooms), bathrooms: String(v.bathrooms), maxGuests: String(v.maxGuests), amenities: v.amenities.map((a) => ({ ...a })),
+    highlights: v.highlights.join('\n'), startingPrice: v.startingPrice != null ? String(v.startingPrice) : '', bedrooms: String(v.bedrooms), bathrooms: String(v.bathrooms), maxGuests: String(v.maxGuests), amenities: v.amenities.map((a) => normalizeAmenity(a)),
     featuredImage: v.featuredImage ?? '', featuredImagePublicId: v.featuredImagePublicId, gallery: v.galleryImages.map((g) => ({ url: g.url, alt: g.alt, publicId: g.publicId ?? null })), rules: v.rules.join('\n'), checkInTime: v.checkInTime, checkOutTime: v.checkOutTime,
     seoTitle: v.seoTitle ?? '', seoDescription: v.seoDescription ?? '', isPublished: v.isPublished, isFeatured: v.isFeatured, displayOrder: String(v.displayOrder) };
 }
@@ -239,14 +255,25 @@ export const VillaFormPage: React.FC = () => {
         )}
         {tab === 'amenities' && (
           <Card title="Amenities" actions={<button type="button" className={btnGhost} onClick={() => set('amenities', [...f.amenities, { label: '', icon: 'sparkles' }])}><Plus className="w-4 h-4" />Add amenity</button>}>
-            <div className="flex flex-wrap gap-1.5 mb-3">{SUGGESTED.filter((s) => !f.amenities.some((a) => a.label === s)).map((s) => <button type="button" key={s} onClick={() => set('amenities', [...f.amenities, { label: s, icon: 'sparkles' }])} className="px-2 py-1 text-xs rounded-full border border-stone-300 hover:bg-stone-50">+ {s}</button>)}</div>
-            {f.amenities.length === 0 && <p className="text-sm text-stone-500">No amenities yet.</p>}
-            <div className="space-y-2">{f.amenities.map((a, i) => (
-              <div key={i} className="flex gap-2">
-                <input className={inputCls} aria-label={`Amenity ${i + 1}`} value={a.label} maxLength={80} onChange={(e) => set('amenities', f.amenities.map((x, j) => (j === i ? { ...x, label: e.target.value } : x)))} />
-                <select className={`${inputCls} w-36 shrink-0`} aria-label="Icon" value={a.icon} onChange={(e) => set('amenities', f.amenities.map((x, j) => (j === i ? { ...x, icon: e.target.value } : x)))}>{(meta?.amenityIcons ?? ['sparkles']).map((ic) => <option key={ic}>{ic}</option>)}</select>
-                <button type="button" aria-label="Remove amenity" className={btnGhost} onClick={() => set('amenities', f.amenities.filter((_, j) => j !== i))}><Trash2 className="w-4 h-4" /></button>
-              </div>))}</div>
+            <p className="text-xs text-stone-500 mb-3">Enter the amenity name shown to guests, then choose an icon. Icon names are stored internally; this form displays readable labels.</p>
+            <div className="flex flex-wrap gap-1.5 mb-4">{SUGGESTED.filter((s) => !f.amenities.some((a) => a.label.trim().toLowerCase() === s.toLowerCase())).map((s) => <button type="button" key={s} onClick={() => set('amenities', [...f.amenities, { label: s, icon: 'sparkles' }])} className="px-2.5 py-1.5 text-xs rounded-full border border-stone-300 bg-white hover:bg-stone-50">+ {s}</button>)}</div>
+            {f.amenities.length === 0 && <p className="text-sm text-stone-500">No amenities yet. Choose a suggestion above or click “Add amenity”.</p>}
+            <div className="space-y-3">{f.amenities.map((a, i) => {
+              const icons = Array.from(new Set(['sparkles', ...(meta?.amenityIcons ?? []), a.icon].filter(Boolean)));
+              return (
+                <div key={i} className="grid grid-cols-1 sm:grid-cols-[minmax(0,1fr)_190px_auto] gap-2 items-end rounded-lg border border-stone-200 bg-stone-50/60 p-3">
+                  <Field label={`Amenity name ${i + 1}`} hint="This text is displayed to guests.">
+                    <input className={inputCls} aria-label={`Amenity ${i + 1}`} placeholder="e.g. Private Swimming Pool" value={a.label} maxLength={80} onChange={(e) => set('amenities', f.amenities.map((x, j) => (j === i ? { ...x, label: e.target.value } : x)))} />
+                  </Field>
+                  <Field label="Display icon">
+                    <select className={inputCls} aria-label={`Icon for amenity ${i + 1}`} value={a.icon || 'sparkles'} onChange={(e) => set('amenities', f.amenities.map((x, j) => (j === i ? { ...x, icon: e.target.value } : x)))}>
+                      {icons.map((ic) => <option key={ic} value={ic}>{iconLabel(ic)}</option>)}
+                    </select>
+                  </Field>
+                  <button type="button" aria-label={`Remove amenity ${i + 1}`} title="Remove amenity" className={`${btnGhost} text-rose-700`} onClick={() => set('amenities', f.amenities.filter((_, j) => j !== i))}><Trash2 className="w-4 h-4" /><span className="sm:hidden">Remove</span></button>
+                </div>
+              );
+            })}</div>
           </Card>
         )}
         {tab === 'images' && (
