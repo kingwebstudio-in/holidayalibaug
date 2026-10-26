@@ -211,7 +211,7 @@ export function injectHead(html: string, m: PageMeta, base: string): string {
 
 // ─────────────────────────── robots.txt / sitemap.xml ───────────────────────────
 export function robotsTxt(base: string): string {
-  if (!config.indexable) return 'User-agent: *\nallow: /\n';
+  if (!config.indexable) return 'User-agent: *\ndisallow: /\n';
   return ['User-agent: *', 'Allow: /', 'Disallow: /admin', 'Disallow: /api/', '', `Sitemap: ${base}/sitemap.xml`, ''].join('\n');
 }
 
