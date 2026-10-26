@@ -12,9 +12,9 @@ import { getSettings } from './services/settings.js';
  */
 
 export const SITE_NAME = 'HolidayAlibag';
-export const DEFAULT_TITLE = 'HolidayAlibag — Luxury Coastal Villas & Getaways in Alibaug';
+export const DEFAULT_TITLE = 'Alibaug Villas & Holiday Homes | HolidayAlibag';
 export const DEFAULT_DESCRIPTION =
-  'Discover private luxury villas and coastal stays in Alibaug, Maharashtra. Browse handpicked villas and send an enquiry — our team confirms availability.';
+  'Explore holiday homes and private villas in Alibaug, Maharashtra. Compare villa locations, amenities and guest capacity, then enquire with HolidayAlibag about your stay.';
 export const OG_IMAGE_PATH = '/og-image.jpg';
 /** The default hero photo is the Largest Contentful Paint element; preloading it lets the browser fetch it before any JavaScript runs. */
 const HERO_PRELOAD = { srcset: '/hero/hero-640.webp 640w, /hero/hero-960.webp 960w, /hero/hero-1376.webp 1376w', fallback: '/hero/hero-960.webp' };
@@ -36,11 +36,11 @@ export interface PageMeta {
 
 const PAGES: Record<string, { title: string; description: string }> = {
   '/privacy-policy': {
-    title: 'Privacy Policy — HolidayAlibag',
+    title: 'Privacy Policy | HolidayAlibag',
     description: 'How HolidayAlibag collects, uses and protects the personal information you share when you send a villa, owner or investment enquiry.',
   },
   '/terms-and-conditions': {
-    title: 'Terms & Conditions — HolidayAlibag',
+    title: 'Terms & Conditions | HolidayAlibag',
     description: 'Terms for using HolidayAlibag.com: enquiry-only bookings, availability confirmation, property information and acceptable use.',
   },
 };
@@ -138,8 +138,15 @@ export async function resolvePage(pathname: string, base: string): Promise<PageM
       const v = await loadVilla(m[1]);
       if (!v) return NOT_FOUND(base);
       const place = v.locality || v.location;
-      const title = truncate(v.seo_title || `${v.name}${place ? ` — ${place}` : ''} | ${SITE_NAME}`, 70);
-      const description = truncate(v.seo_description || v.short_description || v.full_description || `${v.name}: ${v.bedrooms}-bedroom villa for up to ${v.max_guests} guests in ${place || 'Alibaug'}.`, 160);
+      const placeLabel = place
+        ? (/alibaug|alibag/i.test(place) ? place : `${place}, Alibaug`)
+        : 'Alibaug';
+      const title = truncate(
+        v.seo_title || `${v.name} in ${placeLabel} | HolidayAlibag`,
+        65,
+      );
+      const fallbackDescription = `Explore ${v.name}, a ${v.bedrooms}-bedroom villa for up to ${v.max_guests} guests in ${placeLabel}, Maharashtra. View property details and enquire about your stay.`;
+      const description = truncate(v.seo_description || v.short_description || v.full_description || fallbackDescription, 160);
       const img = v.featured_image || v.first_image;
       const url = `${base}${pathname}`;
       return {
@@ -211,7 +218,7 @@ export function injectHead(html: string, m: PageMeta, base: string): string {
 
 // ─────────────────────────── robots.txt / sitemap.xml ───────────────────────────
 export function robotsTxt(base: string): string {
-  if (!config.indexable) return 'User-agent: *\ndisallow: /\n';
+  if (!config.indexable) return 'User-agent: *\nDisallow: /\n';
   return ['User-agent: *', 'Allow: /', 'Disallow: /admin', 'Disallow: /api/', '', `Sitemap: ${base}/sitemap.xml`, ''].join('\n');
 }
 

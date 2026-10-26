@@ -49,13 +49,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
             {/* Editorial Serif 2-Line Headline */}
             <h1 className="font-editorial text-4xl sm:text-5xl lg:text-6xl xl:text-[68px] font-normal text-white leading-[0.95] tracking-tight mb-4 drop-shadow-sm">
-              <span className="block">A Private</span>
-              <span className="block italic font-light text-[#FDF9F3]">Coastal Escape</span>
+              <span className="block">Holiday Homes &</span>
+              <span className="block italic font-light text-[#FDF9F3]">Private Villas in Alibaug</span>
             </h1>
 
             {/* Supporting Copy */}
             <p className="text-sm sm:text-base text-white/90 max-w-lg font-light leading-relaxed mb-6 sm:mb-8 drop-shadow">
-              Your Trusted Holiday Partner since 2021.
+             Your Trusted Holiday Partner since 2021.
             </p>
 
             {/* Horizontal Booking Bar */}
