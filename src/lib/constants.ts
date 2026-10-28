@@ -18,7 +18,7 @@ import villaOwnerPatioImg from '../assets/images/villa_owner_patio_1791832682680
 export const SITE_CONFIG = {
   name: 'HolidayAlibag',
   tagline: 'VILLAS · STAYS · EXPERIENCES',
-  domain: 'holidayalibag.com',
+  domain: 'holidayalibaug.com',
   /** Public origin used only for display text; canonical URLs come from the server's SITE_URL. */
   address: 'Alibaug, Raigad, Maharashtra, India',
 };

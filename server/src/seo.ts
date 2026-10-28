@@ -11,7 +11,7 @@ import { getSettings } from './services/settings.js';
  * Unknown URLs get a real HTTP 404; admin and demo content get noindex.
  */
 
-export const SITE_NAME = 'HolidayAlibag';
+export const SITE_NAME = 'Holiday Alibag';
 export const DEFAULT_TITLE = 'Alibaug Villas & Holiday Homes | HolidayAlibag';
 export const DEFAULT_DESCRIPTION =
   'Explore holiday homes and private villas in Alibaug, Maharashtra. Compare villa locations, amenities and guest capacity, then enquire with HolidayAlibag about your stay.';
