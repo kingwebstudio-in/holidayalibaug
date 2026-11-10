@@ -43,19 +43,19 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             {/* Eyebrow Label */}
             <div className="inline-flex items-center gap-2 mb-3">
               <span className="text-[11px] sm:text-[11px] font-semibold tracking-[0.25em] text-[#E8C77F] uppercase">
-                Luxury Villas in Alibaug
+                Holiday Alibaug · Luxury Villas in Alibag
               </span>
             </div>
 
             {/* Editorial Serif 2-Line Headline */}
             <h1 className="font-editorial text-4xl sm:text-5xl lg:text-6xl xl:text-[68px] font-normal text-white leading-[0.95] tracking-tight mb-4 drop-shadow-sm">
-              <span className="block">Holiday Homes &</span>
+              <span className="block">Holiday Homes &amp;</span>
               <span className="block italic font-light text-[#FDF9F3]">Private Villas in Alibaug</span>
             </h1>
 
             {/* Supporting Copy */}
             <p className="text-sm sm:text-base text-white/90 max-w-lg font-light leading-relaxed mb-6 sm:mb-8 drop-shadow">
-             Your Trusted Holiday Partner since 2021.
+              Your Trusted Holiday Alibag Partner since 2021. Handpicked private pool villas, beachside holiday homes, and curated getaways across Kihim, Mandwa, Varsoli &amp; Nagaon.
             </p>
 
             {/* Horizontal Booking Bar */}

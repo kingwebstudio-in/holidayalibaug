@@ -1,8 +1,8 @@
 {
-  "name": "HolidayAlibag — Luxury Coastal Villas & Getaways",
+  "name": "Holiday Alibag (Holiday Alibaug) — Luxury Coastal Villas & Holiday Homes",
   "short_name": "HolidayAlibag",
   "start_url": "/",
-  "display": "browser",
+  "display": "standalone",
   "theme_color": "#092D28",
   "background_color": "#FBF7EF",
   "icons": [

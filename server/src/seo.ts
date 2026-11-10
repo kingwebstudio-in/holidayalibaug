@@ -12,9 +12,11 @@ import { getSettings } from './services/settings.js';
  */
 
 export const SITE_NAME = 'Holiday Alibag';
-export const DEFAULT_TITLE = 'Alibaug Villas & Holiday Homes | HolidayAlibag';
+export const DEFAULT_TITLE = 'Holiday Alibaug | Luxury Villas, Holiday Homes & Private Pool Stays in Alibag';
 export const DEFAULT_DESCRIPTION =
-  'Explore holiday homes and private villas in Alibaug, Maharashtra. Compare villa locations, amenities and guest capacity, then enquire with HolidayAlibag about your stay.';
+  'Book luxury private pool villas & holiday homes in Alibaug (Alibag). Handpicked beachfront stays in Kihim, Mandwa, Varsoli & Nagaon with private chef, swimming pool & sea views. Enquire with Holiday Alibag today!';
+export const DEFAULT_KEYWORDS =
+  'Holiday Alibaug, Holiday Alibag, holidayalibaug, holidayalibag, holidayalibag.com, holidayalibaug.com, alibaug holiday, alibag holiday, villas in alibaug, villas in alibag, luxury villas alibaug, private pool villa alibaug, holiday homes in alibaug, beachfront villas alibaug, best villas in alibaug, kihim beach villas, mandwa villas, varsoli beach villas, nagaon beach villas, awas beach villas, alibaug weekend getaway from mumbai, alibaug stays with swimming pool, homestays in alibaug, cottages in alibag, group villas alibaug, pet friendly villas alibaug';
 export const OG_IMAGE_PATH = '/og-image.jpg';
 /** The default hero photo is the Largest Contentful Paint element; preloading it lets the browser fetch it before any JavaScript runs. */
 const HERO_PRELOAD = { srcset: '/hero/hero-640.webp 640w, /hero/hero-960.webp 960w, /hero/hero-1376.webp 1376w', fallback: '/hero/hero-960.webp' };
@@ -85,13 +87,109 @@ async function organizationLd(base: string, s: Record<string, any>) {
       '@context': 'https://schema.org',
       '@type': 'Organization',
       name: s.businessName || SITE_NAME,
+      alternateName: [
+        'Holiday Alibaug',
+        'HolidayAlibag',
+        'HolidayAlibaug',
+        'Holiday Alibag Villas',
+        'Holiday Alibaug Villas',
+        'HolidayAlibag.com',
+        'HolidayAlibaug.com',
+      ],
       url: `${base}/`,
       logo: `${base}/icon-512.png`,
       ...(s.publicEmail ? { email: s.publicEmail } : {}),
       ...(s.publicPhone ? { telephone: s.publicPhone } : {}),
       ...(sameAs.length ? { sameAs } : {}),
     },
-    { '@context': 'https://schema.org', '@type': 'WebSite', name: SITE_NAME, url: `${base}/` },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: SITE_NAME,
+      alternateName: [
+        'Holiday Alibaug',
+        'HolidayAlibag',
+        'HolidayAlibaug',
+        'Holiday Alibag Villas',
+        'Holiday Alibaug Villas',
+        'HolidayAlibag.com',
+        'HolidayAlibaug.com',
+      ],
+      url: `${base}/`,
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'LodgingBusiness',
+      name: `${s.businessName || SITE_NAME} — Luxury Villas & Holiday Homes`,
+      alternateName: ['Holiday Alibaug', 'HolidayAlibag Villas'],
+      description: 'Handpicked private luxury villas with swimming pool, holiday homes, and beach cottages across Alibaug, Kihim, Mandwa, Varsoli, Nagaon, and Awas.',
+      url: `${base}/`,
+      logo: `${base}/icon-512.png`,
+      image: `${base}${OG_IMAGE_PATH}`,
+      priceRange: '₹₹₹',
+      currenciesAccepted: 'INR',
+      ...(s.publicPhone ? { telephone: s.publicPhone } : {}),
+      ...(s.publicEmail ? { email: s.publicEmail } : {}),
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Alibaug',
+        addressRegion: 'Maharashtra',
+        postalCode: '402201',
+        addressCountry: 'IN',
+      },
+      geo: {
+        '@type': 'GeoCoordinates',
+        latitude: 18.6414,
+        longitude: 72.8722,
+      },
+      areaServed: ['Alibaug', 'Alibag', 'Kihim', 'Mandwa', 'Varsoli', 'Nagaon', 'Awas', 'Mumbai', 'Pune', 'Maharashtra'],
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: [
+        {
+          '@type': 'Question',
+          name: 'What is Holiday Alibag (Holiday Alibaug)?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Holiday Alibag (also searched as Holiday Alibaug) is a premier villa rental and holiday home service in Alibaug, Maharashtra. We offer handpicked private pool villas, beachside cottages, and luxury stays across Mandwa, Kihim, Varsoli, and Nagaon.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'How do I book a private pool villa in Alibaug?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Browse our curated collection of luxury villas on holidayalibag.com, select your dates, number of guests, and send a booking enquiry or connect directly on WhatsApp. Our concierge confirms availability and assists with catering, transport, and special requests.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'Which are the best beaches in Alibaug for villa stays?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'The best beach locations for holiday homes in Alibaug include Kihim Beach (quiet, coconut groves), Mandwa (near the ferry jetty), Varsoli Beach (white sand, water sports), and Nagaon Beach (family & group friendly).',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'How to reach Alibaug from Mumbai and Pune?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'From Mumbai: Take the M2M Ro-Ro car ferry or speedboat from Ferry Wharf (Bhaucha Dhakka) / Gateway of India to Mandwa Jetty (approx 60 mins), or drive via Atal Setu (MTHL). From Pune: Drive via Mumbai-Pune Expressway and Khopoli-Alibaug route (approx 3 hours).',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'Do holiday homes in Alibaug have cooks and meal services?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Yes, most of our private villas offer dedicated caretakers and optional private cook services serving fresh coastal Konkani seafood, vegetarian delicacies, and customized meals on request.',
+          },
+        },
+      ],
+    },
   ];
 }
 
@@ -190,7 +288,13 @@ export function renderHead(m: PageMeta, base: string): string {
   const lines = [
     `<title>${escAttr(m.title)}</title>`,
     `<meta name="description" content="${d}" />`,
+    `<meta name="keywords" content="${escAttr(DEFAULT_KEYWORDS)}" />`,
+    `<meta name="author" content="Holiday Alibag (Holiday Alibaug)" />`,
     `<meta name="robots" content="${robots}" />`,
+    `<meta name="geo.region" content="IN-MH" />`,
+    `<meta name="geo.placename" content="Alibaug, Raigad, Maharashtra, India" />`,
+    `<meta name="geo.position" content="18.6414;72.8722" />`,
+    `<meta name="ICBM" content="18.6414, 72.8722" />`,
     canonical ? `<link rel="canonical" href="${escAttr(canonical)}" />` : '',
     m.preloadHero ? `<link rel="preload" as="image" href="${HERO_PRELOAD.fallback}" imagesrcset="${HERO_PRELOAD.srcset}" imagesizes="100vw" fetchpriority="high" />` : '',
     `<meta property="og:site_name" content="${SITE_NAME}" />`,

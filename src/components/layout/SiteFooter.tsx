@@ -218,6 +218,16 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({
           </div>
         </div>
 
+        {/* SEO Keyword & Regional Index Strip */}
+        <div className="py-6 border-b border-white/10 text-[11px] text-white/60">
+          <div className="font-semibold text-white/80 uppercase tracking-wider text-[10px] mb-2 text-[#D8AD57]">
+            Popular Alibaug Searches &amp; Destinations
+          </div>
+          <p className="leading-relaxed">
+            <strong className="text-white/85">Holiday Alibag &amp; Holiday Alibaug:</strong> Private Pool Villas in Alibaug · Kihim Beach Villas · Mandwa Jetty Holiday Homes · Varsoli Beach Cottages · Nagaon Beach Stays · Awas Beach Luxury Villas · Weekend Getaways from Mumbai · Stays near Mandwa Ro-Ro Ferry · Homestays in Alibaug with Cook · Alibaug Corporate &amp; Group Bungalows · Pet-Friendly Villas in Alibaug.
+          </p>
+        </div>
+
         {/* Footer attribution and legal links */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-white/65">
           <div className="text-center sm:text-left">

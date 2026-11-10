@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-interface Seo { title: string; description?: string; noindex?: boolean; path?: string }
+interface Seo { title: string; description?: string; keywords?: string; noindex?: boolean; path?: string }
 
 function setMeta(selector: string, attr: 'name' | 'property', key: string, content: string) {
   let el = document.head.querySelector<HTMLMetaElement>(selector);
@@ -14,13 +14,16 @@ function setMeta(selector: string, attr: 'name' | 'property', key: string, conte
  * in-browser sharing accurate afterwards. The canonical origin is taken from the server-rendered canonical tag, so it is
  * always the configured production domain.
  */
-export function useSeo({ title, description, noindex = false, path }: Seo) {
+export function useSeo({ title, description, keywords, noindex = false, path }: Seo) {
   useEffect(() => {
     document.title = title;
     if (description) {
       setMeta('meta[name="description"]', 'name', 'description', description);
       setMeta('meta[property="og:description"]', 'property', 'og:description', description);
       setMeta('meta[name="twitter:description"]', 'name', 'twitter:description', description);
+    }
+    if (keywords) {
+      setMeta('meta[name="keywords"]', 'name', 'keywords', keywords);
     }
     setMeta('meta[property="og:title"]', 'property', 'og:title', title);
     setMeta('meta[name="twitter:title"]', 'name', 'twitter:title', title);

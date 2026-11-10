@@ -12,6 +12,7 @@ import { VillaShowcase } from './components/home/VillaShowcase';
 import { ExperiencesSection } from './components/home/ExperiencesSection';
 import { ExploreAlibaug } from './components/home/ExploreAlibaug';
 import { GuestReviews } from './components/home/GuestReviews';
+import { SeoContentSection } from './components/home/SeoContentSection';
 import { VillaOwnerSection } from './components/home/VillaOwnerSection';
 import { PropertyInvestmentSection } from './components/home/PropertyInvestmentSection';
 import { SiteFooter } from './components/layout/SiteFooter';
@@ -28,7 +29,7 @@ import { ApiError } from './services/api';
 import { NotFoundPage } from './pages/NotFoundPage';
 import { useSeo } from './hooks/useSeo';
 import { events } from './lib/analytics';
-import { DEFAULT_DESCRIPTION, DEFAULT_TITLE } from './lib/seoDefaults';
+import { DEFAULT_DESCRIPTION, DEFAULT_KEYWORDS, DEFAULT_TITLE } from './lib/seoDefaults';
 
 export default function PublicSite({ slug }: { slug?: string }) {
   const { settings, status } = useSiteData();
@@ -114,8 +115,14 @@ export default function PublicSite({ slug }: { slug?: string }) {
   }, [hash, status]);
 
   useSeo(selectedVilla
-    ? { title: selectedVilla.seoTitle || `${selectedVilla.name} — ${selectedVilla.locality || selectedVilla.location} | HolidayAlibag`, description: selectedVilla.seoDescription || selectedVilla.shortDescription || DEFAULT_DESCRIPTION, noindex: selectedVilla.isDemo, path: `/villas/${selectedVilla.slug}` }
-    : { title: DEFAULT_TITLE, description: DEFAULT_DESCRIPTION, path: '/' });
+    ? {
+        title: selectedVilla.seoTitle || `${selectedVilla.name} in ${selectedVilla.locality || selectedVilla.location}, Alibaug | Holiday Alibag`,
+        description: selectedVilla.seoDescription || selectedVilla.shortDescription || DEFAULT_DESCRIPTION,
+        keywords: `${selectedVilla.name}, ${selectedVilla.locality} villa, villas in alibaug, villas in alibag, private pool villa alibaug, holiday alibag, holiday alibaug`,
+        noindex: selectedVilla.isDemo,
+        path: `/villas/${selectedVilla.slug}`,
+      }
+    : { title: DEFAULT_TITLE, description: DEFAULT_DESCRIPTION, keywords: DEFAULT_KEYWORDS, path: '/' });
 
   // Footer links only know the slug: fetch the full record, then open it
   const handleViewVillaBySlug = (v: { slug: string }) => navigate(`/villas/${v.slug}`);
@@ -162,10 +169,13 @@ export default function PublicSite({ slug }: { slug?: string }) {
         {/* 5. Refined Guest Reviews Testimonials */}
         <GuestReviews />
 
-        {/* 6. Villa Owner Listing Partnership Section */}
+        {/* 6. Comprehensive Alibaug Travel Guide, Stays & FAQs for SEO */}
+        <SeoContentSection />
+
+        {/* 7. Villa Owner Listing Partnership Section */}
         <VillaOwnerSection onShowToast={addToast} />
 
-        {/* 7. Property Investment Enquiry Section */}
+        {/* 8. Property Investment Enquiry Section */}
         <PropertyInvestmentSection onShowToast={addToast} />
       </main>
 
